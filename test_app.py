@@ -11,12 +11,15 @@ def login():
 
     eclass_service = EclassCrawler(studno=user_id)
     assignment_db = AssignmentDatabase()
-
+    
+    
+    
     try:
         eclass_service.open_eclass()
         if eclass_service.login(user_id, password):
             assignments = eclass_service.open_class()
             assignment_db.save_assignments(user_id, assignments)
+            assignment_db.save_to_json()
             return jsonify({'status': 'success', 'message': 'Assignment data successfully saved!'})
         else:
             return jsonify({'status': 'failure', 'message': 'Invalid credentials'})

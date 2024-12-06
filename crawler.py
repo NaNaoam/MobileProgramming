@@ -105,8 +105,8 @@ class EclassCrawler:
                                         submission_status = tr.find_element(By.CLASS_NAME, "cell.c3")
 
                                         assignments.append({
-                                            'assign_name': assignment.text,
                                             'class_name': class_name,
+                                            'assign_name': assignment.text,
                                             'deadline': deadline.text,
                                             'issubmit': 1 if "제출 완료" in submission_status.text else 0
                                         })
