@@ -25,7 +25,7 @@ class AssignmentDatabase:
                 continue  # 이미 존재하는 과제는 건너뛰기
 
             sql = '''
-            INSERT INTO Assignment (studno, subjects, assign_name, deadline, issubmit, isdeleted)
+            INSERT INTO Assignment (studno, subjects, assign_name, deadline, issubmit, url)
             VALUES (%s, %s, %s, %s, %s, %s)
             '''
             values = (
@@ -34,7 +34,7 @@ class AssignmentDatabase:
                 assignment['assign_name'], 
                 assignment['deadline'], 
                 '1' if assignment['issubmit'] == 1 else '0',
-                '0'
+                assignment['url']
             )
             try:
                 self.cursor.execute(sql, values)
@@ -46,16 +46,15 @@ class AssignmentDatabase:
         try:
             if studno:
                 sql = """
-                SELECT studno, subjects, assign_name, deadline, issubmit 
+                SELECT studno, subjects, assign_name, deadline, issubmit, url 
                 FROM Assignment 
-                WHERE studno = %s AND isdeleted = '0'
+                WHERE studno = %s
                 """
                 self.cursor.execute(sql, (studno,))
             else:
                 sql = """
-                SELECT studno, subjects, assign_name, deadline, issubmit 
+                SELECT studno, subjects, assign_name, deadline, issubmit, url   
                 FROM Assignment 
-                WHERE isdeleted = '0'
                 """
                 self.cursor.execute(sql)
 
@@ -68,7 +67,8 @@ class AssignmentDatabase:
                     'subjects': assignment[1],
                     'assign_name': assignment[2],
                     'deadline': assignment[3],
-                    'issubmit': assignment[4]
+                    'issubmit': assignment[4],
+                    'url': assignment[5]
                 })
             return assignment_list
         except mysql.connector.Error as err:
