@@ -101,6 +101,8 @@ class EclassCrawler:
                                     td_elements = tr.find_elements(By.TAG_NAME, "td")
                                     if len(td_elements) > 3:
                                         assignment = tr.find_element(By.CLASS_NAME, "cell.c1")
+                                        find_url = tr.find_element(By.TAG_NAME,"a")
+                                        assigmnet_url = find_url.get_attribute('href')
                                         deadline = tr.find_element(By.CLASS_NAME, "cell.c2")
                                         submission_status = tr.find_element(By.CLASS_NAME, "cell.c3")
 
@@ -108,8 +110,9 @@ class EclassCrawler:
                                             'class_name': class_name,
                                             'assign_name': assignment.text,
                                             'deadline': deadline.text,
-                                            'issubmit': 1 if "제출 완료" in submission_status.text else 0
-                                        })
+                                            'issubmit': 1 if "제출 완료" in submission_status.text else 0,
+											'url' : assigment_url
+											})
                                 except Exception as e:
                                     print(f"과제 데이터 처리 중 오류: {e}")
                                     continue
