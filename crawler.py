@@ -102,7 +102,7 @@ class EclassCrawler:
                                     if len(td_elements) > 3:
                                         assignment = tr.find_element(By.CLASS_NAME, "cell.c1")
                                         find_url = tr.find_element(By.TAG_NAME,"a")
-                                        assigmnet_url = find_url.get_attribute('href')
+                                        assigment_url = find_url.get_attribute('href')
                                         deadline = tr.find_element(By.CLASS_NAME, "cell.c2")
                                         submission_status = tr.find_element(By.CLASS_NAME, "cell.c3")
 
